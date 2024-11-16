@@ -13,7 +13,7 @@ export const ComboMarketsPreview = () => {
     <div className='flex flex-wrap p-5 justify-between'>
       {markets ? (
         Object.keys(markets).map((m) => (
-          <div className='w-[calc(25%-16px)]'>
+          <div className='w-[calc(25%-16px)] h-screen'>
             <ComboMarketCard name={m} markets={markets[m]} />
           </div>
         ))

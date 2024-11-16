@@ -40,16 +40,24 @@ export const ComboMarketCard = ({
           .reduce((prev, current) => prev * current)
 
   return (
-    <div className='flex flex-col bg-[#1E1E1E] rounded-xl w-full p-10 text-[#d3d3d3]'>
+    <div className='flex flex-col bg-[#1E1E1E] rounded-xl w-full max-h-[calc(100%-112px)] p-10 text-[#d3d3d3] overflow-scroll'>
+      {/* Head */}
       <div className='flex flex-col justify-between items-center mt-[8px] w-full'>
         <h3 className='w-full pb-[12px] mb-[4px] text-[20px] text-white text-nowrap border-b-[1px] border-solid border-grey'>
           {name}
         </h3>
         <Button label='Provide Liquidity' />
       </div>
+
+      {/* Spacer */}
       <div className='flex justify-center items-center w-full text-[14px] mb-[16px] pb-[12px] border-b-[1px] border-solid border-grey'>
         or
       </div>
+
+      {/* Mask */}
+      <div className='w-full h-[80px] absolute left-0 bottom-0 bg-gradient-to-b from-transparent from-0% via-slate-400 via-60% to-black to-100%'></div>
+
+      {/* Markets */}
       <div className='flex flex-col gap-4'>
         {markets.map((market) => (
           <div key={market.question_id} className='flex flex-col gap-2'>
@@ -86,6 +94,8 @@ export const ComboMarketCard = ({
           </div>
         ))}
       </div>
+
+      {/* Buy */}
       <div className='flex flex-col mt-10 items-center justify-between'>
         <p className='pl-3 text-[12px] mb-4 text-[#bebebe]'>
           Combined prices: {(selectedPrice * 100).toFixed(2)}%
