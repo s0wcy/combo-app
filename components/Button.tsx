@@ -11,10 +11,10 @@ export const Button = (props: Props) => {
   // Render
   return (
     <button
-      onClick={action == null ? action : () => {}}
+      onClick={action != null ? action : () => {}}
       className={`w-${
         width ? width : "full"
-      } h-[56px] px-[16px] bg-blue text-white text-[24px] font-bold rounded-[4px]`}
+      } h-[48px] m-[8px] px-[16px] bg-blue text-white text-[14px] text-nowrap rounded-[4px]`}
     >
       {label}
     </button>

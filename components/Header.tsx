@@ -7,7 +7,7 @@ export const Header = () => {
 
   return (
     <header className='flex flex-row justify-between items-center w-screen h-[80px] px-[16px] absolute top-0 left-0'>
-      <h1 className='text-cream text-[32px] font-bold'>
+      <h1 className='font-markazi text-cream text-[24px]'>
         ComboMarket
         <span className='text-blue'>.</span>
       </h1>

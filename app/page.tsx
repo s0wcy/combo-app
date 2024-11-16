@@ -8,6 +8,7 @@ import { useWeb3Auth } from "@/context/Web3AuthContext"
 import { Header } from "@/components/Header"
 
 import RPC from "../rpc/viemRPC"
+import { Button } from "@/components/Button"
 
 function App() {
   // Hooks
@@ -69,58 +70,27 @@ function App() {
     }
   }
 
-  const loggedInView = (
-    <>
-      <div className='flex-container'>
-        <div>
-          <button onClick={getUserInfo} className='card'>
-            Get User Info
-          </button>
-        </div>
-        <div>
-          <button onClick={getAccounts} className='card'>
-            Get Accounts
-          </button>
-        </div>
-        <div>
-          <button onClick={getBalance} className='card'>
-            Get Balance
-          </button>
-        </div>
-        <div>
-          <button onClick={signMessage} className='card'>
-            Sign Message
-          </button>
-        </div>
-        <div>
-          <button onClick={sendTransaction} className='card'>
-            Send Transaction
-          </button>
-        </div>
-        <div>
-          <button onClick={logout} className='card'>
-            Log Out
-          </button>
-        </div>
-      </div>
-    </>
-  )
-
-  const unloggedInView = (
-    <button onClick={login} className='card'>
-      Login
-    </button>
+  const walletView = (
+    <div className='flex flex-row justify-center items-center w-full'>
+      <Button label='Get User Info' action={getUserInfo} />
+      <Button label='Get Accounts' action={getAccounts} />
+      <Button label='Get Balance' action={getBalance} />
+      <Button label='Sign Message' action={signMessage} />
+      <Button label='Send Transaction' action={sendTransaction} />
+      <Button label='Log Out' action={logout} />
+    </div>
   )
 
   return (
-    <div className='container'>
+    <>
       <Header />
 
-      <div className='grid'>{loggedIn ? loggedInView : unloggedInView}</div>
+      {walletView}
+
       <div id='console' style={{ whiteSpace: "pre-line" }}>
-        <p style={{ whiteSpace: "pre-line" }}></p>
+        <p className='text-white' style={{ whiteSpace: "pre-line" }}></p>
       </div>
-    </div>
+    </>
   )
 }
 

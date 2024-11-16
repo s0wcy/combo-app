@@ -9,7 +9,12 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        markazi: ["Markazi Text", "serif"],
+      },
+    },
     colors: {
       red: "#E84142",
       green: "#5CBD6E",
