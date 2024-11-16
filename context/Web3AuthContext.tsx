@@ -3,16 +3,15 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react"
 
-import {
-  CHAIN_NAMESPACES,
-  IAdapter,
-  IProvider,
-  WEB3AUTH_NETWORK,
-} from "@web3auth/base"
+import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base"
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider"
 import { getDefaultExternalAdapters } from "@web3auth/default-evm-adapter"
 import { Web3Auth, Web3AuthOptions } from "@web3auth/modal"
-import RPC from "../rpc/viemRPC"
+import {
+  AccountAbstractionProvider,
+  BiconomySmartAccount,
+} from "@web3auth/account-abstraction-provider"
+import RPC from "@/rpc/viemRPC"
 
 // Web3Auth Client
 const clientId = process.env.NEXT_PUBLIC_WEB3AUTH_ID
@@ -32,6 +31,20 @@ const chainConfig = {
   logo: "https://cryptologos.cc/logos/polygon-matic-logo.png",
 }
 
+// AA Provider
+const pimlicoApi = `https://api.pimlico.io/v2/${parseInt(
+  chainConfig.chainId,
+  16
+)}/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API}`
+const accountAbstractionProvider = new AccountAbstractionProvider({
+  config: {
+    chainConfig,
+    smartAccountInit: new BiconomySmartAccount(),
+    bundlerConfig: { url: pimlicoApi },
+    paymasterConfig: { url: pimlicoApi },
+  },
+})
+
 // SDK Configuration
 const privateKeyProvider = new EthereumPrivateKeyProvider({
   config: { chainConfig },
@@ -40,6 +53,8 @@ const web3AuthOptions: Web3AuthOptions = {
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
   privateKeyProvider,
+  accountAbstractionProvider,
+  useAAWithExternalWallet: false,
 }
 const web3auth = new Web3Auth(web3AuthOptions)
 
