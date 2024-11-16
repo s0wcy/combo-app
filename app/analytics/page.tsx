@@ -4,6 +4,7 @@ import { use, useEffect, useRef, useState } from "react";
 import { GraphCanvas, GraphCanvasRef, useSelection, GraphNode, GraphEdge } from "reagraph"
 import axios from "axios";
 import { useMarkets } from "@/hooks/useMarkets";
+import { usePositions } from "@/hooks/usePositions";
 
 
 const data: any = {
@@ -50,55 +51,6 @@ const data: any = {
 
 }
 
-const getData = async () => {
-  const AxiosInstance = axios.create({
-    baseURL: "https://clob.polymarket.com"
-  });
-
-  let nodeRes = (await AxiosInstance.get("/markets")).data.data.map((market: any) => {
-    //   const combo = data.combos[comboKey];
-    //   combo.markets.forEach((marketKey: any) => {
-    //     combo.markets.forEach((marketKey2: any) => {
-    //       if (marketKey !== marketKey2) {
-    //         if (marketKey > marketKey2) {
-    //           const temp = marketKey;
-    //           marketKey = marketKey2;
-    //           marketKey2 = temp;
-    //         }
-
-    //         const edge: any = edges.find((edge) => edge.source === marketKey && edge.target === marketKey2);
-    //         if (edge) {
-    //           edge.size += 1;
-    //         } else {
-    //           edges.push({
-    //             id: `${marketKey}-${marketKey2}`,
-    //             source: marketKey,
-    //             target: marketKey2,
-    //             size: 1,
-    //           });
-
-    //         }
-    //       }
-    //     });
-    //   });
-    // });
-
-    if (market.question_id === "") {
-      return null;
-    }
-  
-    return {
-      id: market.question_id,
-      label: market.question,
-      // icon: market.icon,
-      // size: market.tvl / 1000000,
-    }
-  })
-
-  nodeRes = nodeRes.filter((node: any) => node !== null);
-
-  return nodeRes
-}
 
 function Analytics() {
 
@@ -108,46 +60,59 @@ function Analytics() {
   const graphRef = useRef<GraphCanvasRef | null>(null);
 
   const { markets, isLoading, isError } = useMarkets()
+  const { positions, isLoading: isLoadingPos, isError: isErrorPos } = usePositions()
   console.log(markets)
 
   useEffect(() => {
     if (isLoading) return;
     if (isError) return;
     if (!markets) return;
+    if (!positions) return;
+    if (isLoadingPos) return;
+    if (isErrorPos) return;
     if (nodes.length > 0 && edges.length > 0) return;
+
     let n: GraphNode[] = []
     Object.keys(markets!).forEach((m) => {
       const combo = markets![m];
       combo.forEach((market: any) => {
-        const node: GraphNode = {
-          id: market.id,
-          label: market.question,
-          size: market.liquidityNum / 1000000,
-          icon: `/api/get-image?imageUrl=${market.icon}`,
+        const q = market.question;
+        const icon = market.icon;
+
+        for (const token of market.tokens) {
+          const node: GraphNode = {
+            id: token.token_id,
+            label: `${q} - ${token.outcome}`,
+            // size: market.liquidityNum / 1000000,
+            icon: `/api/get-image?imageUrl=${icon}`,
+          }
+          n.push(node)
         }
-        n.push(node)
       });
     })
     setNodes(n);
 
-    // generate 40 random edges between randomly picked nodes with random sizes
     let e: GraphEdge[] = [];
-    for (let i = 0; i < 40; i++) {
-      const source = Math.floor(Math.random() * nodes.length);
-      const target = Math.floor(Math.random() * nodes.length);
-      if (source !== target) {
-        const edge: GraphEdge = {
-          id: `${source}-${target}`,
-          source: nodes[source].id,
-          target: nodes[target].id,
-          size: Math.random() * 10,
-        };
-        e.push(edge);
+    // position is an array of array of nodeId, all the nodes in the same array are connected
+    positions.forEach((position) => {
+      for (let i = 0; i < position.length; i++) {
+        for (let j = i + 1; j < position.length; j++) {
+          const source = position[i];
+          const target = position[j];
+          const edge: GraphEdge = {
+            id: `${source}-${target}`,
+            source: source,
+            target: target,
+            size: 1,
+          };
+          e.push(edge);
+        }
       }
-    }
+    });
     setEdges(e);
 
-  }, [markets, isLoading, isError, nodes, edges]);
+
+  }, [markets, isLoading, isError, nodes, edges, isLoadingPos, isErrorPos, positions]);
 
   const {
     selections,
