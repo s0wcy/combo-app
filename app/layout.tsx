@@ -27,8 +27,8 @@ export default function RootLayout({
     <Web3AuthProvider>
       <MarketsProvider>
         <html lang='en'>
-          <body className={inter.className}>
-            <div className='w-screen h-screen mt-[80px]'>{children}</div>
+          <body className={`${inter.className} w-screen h-screen`}>
+            {children}
           </body>
         </html>
       </MarketsProvider>

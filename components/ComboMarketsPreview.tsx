@@ -4,13 +4,11 @@ import { ComboMarketCard } from "./ComboMarketCard"
 
 export const ComboMarketsPreview = () => {
   const { markets, isLoading, isError } = useMarkets()
-  // const { markets: marketsState, setMarkets } = useMarketsContext()
 
   console.log(markets)
-  // console.log(marketsState.length)
 
   return (
-    <div className='flex flex-wrap p-5 justify-between'>
+    <div className='flex flex-wrap justify-between h-[calc(100%-160px)] px-[16px] overflow-hidden	'>
       {markets ? (
         Object.keys(markets).map((m) => (
           <div className='w-[calc(25%-16px)] h-screen'>
