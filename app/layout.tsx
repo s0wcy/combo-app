@@ -9,7 +9,7 @@ const markazi = Markazi_Text({
   display: "swap",
 })
 
-import { Web3AuthProvider } from "../context/Web3AuthContext"
+import { Web3AuthProvider } from "@/context/Web3AuthContext"
 
 export const metadata = {
   title: "ComboMarket",
