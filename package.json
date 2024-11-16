@@ -10,6 +10,7 @@
   },
   "//IMP START": "IMP START - Web3Auth Installation",
   "dependencies": {
+    "@web3auth/account-abstraction-provider": "^9.4.0",
     "@web3auth/base": "^9.3.0",
     "@web3auth/default-evm-adapter": "^9.3.0",
     "@web3auth/ethereum-provider": "^9.3.0",
