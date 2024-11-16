@@ -1,65 +1,134 @@
-import axios from "axios"
-import useSWR from "swr"
+import axios from 'axios';
+import useSWR from 'swr';
 
 export type Market = {
-  enable_order_book: boolean
-  active: boolean
-  closed: boolean
-  archived: boolean
-  accepting_orders: boolean
-  accepting_order_timestamp: string | null
-  minimum_order_size: number
-  minimum_tick_size: number
-  condition_id: string
-  question_id: string
-  question: string
-  description: string
-  market_slug: string
-  end_date_iso: string
-  game_start_time: string | null
-  seconds_delay: number
-  fpmm: string
-  maker_base_fee: number
-  taker_base_fee: number
-  notifications_enabled: boolean
-  neg_risk: boolean
-  neg_risk_market_id: string
-  neg_risk_request_id: string
-  icon: string
-  image: string
-  rewards: {
-    rates: number | null
-    min_size: number
-    max_spread: number
-  }
-  is_50_50_outcome: boolean
-  tokens: {
-    token_id: string
-    outcome: string
-    price: number
-    winner: boolean
-  }[]
-  tags: string[]
-}
+  id: string;
+  question: string;
+  conditionId: string;
+  slug: string;
+  resolutionSource: string;
+  endDate: string;
+  liquidity: string;
+  startDate: string;
+  image: string;
+  icon: string;
+  description: string;
+  outcomes: string[];
+  outcomePrices: string[];
+  volume: string;
+  active: boolean;
+  closed: boolean;
+  marketMakerAddress: string;
+  createdAt: string;
+  updatedAt: string;
+  new: boolean;
+  featured: boolean;
+  submitted_by: string;
+  archived: boolean;
+  resolvedBy: string;
+  restricted: boolean;
+  groupItemTitle: string;
+  groupItemThreshold: string;
+  questionID: string;
+  enableOrderBook: boolean;
+  orderPriceMinTickSize: number;
+  orderMinSize: number;
+  volumeNum: number;
+  liquidityNum: number;
+  endDateIso: string;
+  startDateIso: string;
+  hasReviewedDates: boolean;
+  volume24hr: number;
+  clobTokenIds: string[];
+  umaBond: string;
+  umaReward: string;
+  volume24hrClob: number;
+  volumeClob: number;
+  liquidityClob: number;
+  acceptingOrders: boolean;
+  negRisk: boolean;
+  _sync: boolean;
+  events: {
+    id: string;
+    ticker: string;
+    slug: string;
+    title: string;
+    description: string;
+    startDate: string;
+    creationDate: string;
+    endDate: string;
+    image: string;
+    icon: string;
+    active: boolean;
+    closed: boolean;
+    archived: boolean;
+    new: boolean;
+    featured: boolean;
+    restricted: boolean;
+    liquidity: number;
+    volume: number;
+    openInterest: number;
+    createdAt: string;
+    updatedAt: string;
+    competitive: number;
+    volume24hr: number;
+    enableOrderBook: boolean;
+    liquidityClob: number;
+    _sync: boolean;
+    commentCount: number;
+    cyom: boolean;
+    showAllOutcomes: boolean;
+    showMarketImages: boolean;
+    enableNegRisk: boolean;
+    automaticallyActive: boolean;
+    negRiskAugmented: boolean;
+  }[];
+  ready: boolean;
+  funded: boolean;
+  acceptingOrdersTimestamp: string;
+  cyom: boolean;
+  competitive: number;
+  pagerDutyNotificationEnabled: boolean;
+  approved: boolean;
+  clobRewards: {
+    id: string;
+    conditionId: string;
+    assetAddress: string;
+    rewardsAmount: number;
+    rewardsDailyRate: number;
+    startDate: string;
+    endDate: string;
+  }[];
+  rewardsMinSize: number;
+  rewardsMaxSpread: number;
+  spread: number;
+  lastTradePrice: number;
+  bestBid: number;
+  bestAsk: number;
+  automaticallyActive: boolean;
+  clearBookOnStart: boolean;
+  manualActivation: boolean;
+  negRiskOther: boolean;
+};
 
 export type HookMarkets = {
-  markets: { [name: string]: Market[] } | undefined
-  isLoading: boolean
-  isError: boolean
-  mutate: () => void
-}
+  markets: { [name: string]: Market[] } | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  mutate: () => void;
+};
 
-const fetcher = (q: any) => axios.get(q).then((d) => d.data)
+const fetcher = (q: any) => axios.get(q).then((d) => d.data);
 
 export const useMarkets = (): HookMarkets => {
   const { data, error, mutate } = useSWR<{
-    markets: { [name: string]: Market[] }
-  }>(`/api/markets`, fetcher)
+    markets: { [name: string]: Market[] };
+  }>(`/api/markets`, fetcher);
 
   return {
     markets: data?.markets ?? undefined,
     isLoading: !error && !data,
     isError: Boolean(error),
     mutate,
-  }
-}
+  };
+};

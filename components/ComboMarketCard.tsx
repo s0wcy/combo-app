@@ -60,7 +60,7 @@ export const ComboMarketCard = ({
                       ? '#2f7c5f'
                       : '#303030',
                     '&:hover': {
-                      backgroundColo: selectedTokens.find(
+                      backgroundColor: selectedTokens.find(
                         (t) => t.token_id === token.token_id
                       )
                         ? '#2f7c5f'

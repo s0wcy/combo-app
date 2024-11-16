@@ -53,18 +53,18 @@ export const resolveConditionIdsToMarketIds = (
   ).then((res: any) => res.tokenIdConditions.map((c: any) => c.condition.id));
 
 export const fetchMarkets = (ids: string[]): Promise<Market[]> =>
+  Promise.all(
+    ids.map((id) => axios.get(`https://clob.polymarket.com/markets/${id}`))
+  ).then((r) => r.map((e) => e.data));
+
+const resolveMarkets = (ids: string[]) =>
   axios
-    .all(
-      ids.map((id) => axios.get(`https://clob.polymarket.com/markets/${id}`))
+    .get(
+      `https://gamma-api.polymarket.com/markets?clob_token_ids=${ids.join(
+        '&clob_token_ids='
+      )}`
     )
-    .then(
-      axios.spread((...res) =>
-        res.map((r) => {
-          console.log(r);
-          return r.data;
-        })
-      )
-    );
+    .then((r) => r.data);
 
 const getMarkets = async (): Promise<any> => {
   const factoryAbi = ['function getMarkets() public view returns (address[])'];
@@ -98,17 +98,7 @@ const getMarkets = async (): Promise<any> => {
 
     console.log('OUTCOMES', outcomes.length, outcomes);
 
-    const conditions = await resolveConditionIdsToMarketIds(outcomes);
-
-    console.log('CONDITIONS', conditions.length, conditions);
-
-    let markets = await fetchMarkets(conditions);
-
-    // remove duplicate markets
-    markets = markets.filter(
-      (m, i, arr) =>
-        arr.findIndex((o) => o.condition_id === m.condition_id) === i
-    );
+    const markets = await resolveMarkets(outcomes);
 
     console.log('MARKETS', markets.length);
 
