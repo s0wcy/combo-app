@@ -9,6 +9,7 @@ import { Header } from "@/components/Header"
 
 import { ComboMarketsPreview } from "@/components/ComboMarketsPreview"
 import RPC from "../rpc/viemRPC"
+import { Button } from "@/components/Button"
 
 function App() {
   // Hooks
@@ -70,26 +71,28 @@ function App() {
     }
   }
 
-  // const walletView = (
-  //   <div className='flex flex-row justify-center items-center w-full'>
-  //     <Button label='Get User Info' action={getUserInfo} />
-  //     <Button label='Get Accounts' action={getAccounts} />
-  //     <Button label='Get Balance' action={getBalance} />
-  //     <Button label='Sign Message' action={signMessage} />
-  //     <Button label='Send Transaction' action={sendTransaction} />
-  //     <Button label='Log Out' action={logout} />
-  //   </div>
-  // )
+  console.log(getAccounts().then((res) => console.log("LOGGUED WITH", res)))
+
+  const walletView = (
+    <div className='flex flex-row justify-center items-center w-full'>
+      <Button label='Get User Info' action={getUserInfo} />
+      <Button label='Get Accounts' action={getAccounts} />
+      <Button label='Get Balance' action={getBalance} />
+      <Button label='Sign Message' action={signMessage} />
+      <Button label='Send Transaction' action={sendTransaction} />
+      <Button label='Log Out' action={logout} />
+    </div>
+  )
 
   return (
     <main className='w-full h-[calc(100%-80px)]'>
-      <Header />
+      {/* <Header /> */}
 
-      {/* {walletView} */}
+      {walletView}
 
-      {/* <div id='console' style={{ whiteSpace: "pre-line" }}>
+      <div id='console' style={{ whiteSpace: "pre-line" }}>
         <p className='text-white' style={{ whiteSpace: "pre-line" }}></p>
-      </div> */}
+      </div>
 
       <div className='mt-[80px]'>
         <ComboMarketsPreview />

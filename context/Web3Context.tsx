@@ -23,9 +23,9 @@ if (!clientId) {
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0x89",
-  rpcTarget: "https://rpc.ankr.com/polygon",
+  rpcTarget: process.env.NEXT_PUBLIC_RPC_URL as string,
   displayName: "Polygon Mainnet",
-  blockExplorerUrl: "https://polygonscan.com",
+  blockExplorerUrl: "https://polygon.blockscout.com/",
   ticker: "POL",
   tickerName: "Polygon Ecosystem Token",
   logo: "https://cryptologos.cc/logos/polygon-matic-logo.png",
@@ -53,8 +53,8 @@ const web3AuthOptions: Web3AuthOptions = {
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
   privateKeyProvider,
-  accountAbstractionProvider,
-  useAAWithExternalWallet: false,
+  // accountAbstractionProvider,
+  // useAAWithExternalWallet: false,
 }
 const web3auth = new Web3Auth(web3AuthOptions)
 
