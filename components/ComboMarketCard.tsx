@@ -53,15 +53,21 @@ export const ComboMarketCard = ({
             <div className="flex flex-col gap-2 mb-5">
               {market.tokens.map((token) => (
                 <div
-                  className={`flex bg-[${
-                    selectedTokens.find((t) => t.token_id === token.token_id)
+                  style={{
+                    backgroundColor: selectedTokens.find(
+                      (t) => t.token_id === token.token_id
+                    )
                       ? '#2f7c5f'
-                      : '#303030'
-                  }] rounded-md hover:cursor-pointer hover:bg-[${
-                    selectedTokens.find((t) => t.token_id === token.token_id)
-                      ? '#2f7c5f'
-                      : '#363636'
-                  }] p-3 gap-10 items-center`}
+                      : '#303030',
+                    '&:hover': {
+                      backgroundColo: selectedTokens.find(
+                        (t) => t.token_id === token.token_id
+                      )
+                        ? '#2f7c5f'
+                        : '#363636',
+                    },
+                  }}
+                  className={`flex rounded-md hover:cursor-pointer p-3 gap-10 items-center`}
                   onClick={() => handleSelectToken(token, market)}
                 >
                   <p className="text-[10px] w-[50px]">
