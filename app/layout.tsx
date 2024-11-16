@@ -10,6 +10,7 @@ const markazi = Markazi_Text({
 })
 
 import { Web3AuthProvider } from "@/context/Web3Context"
+import { MarketsProvider } from "@/context/MarketsContext"
 
 export const metadata = {
   title: "ComboMarket",
@@ -24,11 +25,13 @@ export default function RootLayout({
 }) {
   return (
     <Web3AuthProvider>
-      <html lang='en'>
-        <body className={inter.className}>
-          <div className='w-screen h-screen mt-[80px]'>{children}</div>
-        </body>
-      </html>
+      <MarketsProvider>
+        <html lang='en'>
+          <body className={inter.className}>
+            <div className='w-screen h-screen mt-[80px]'>{children}</div>
+          </body>
+        </html>
+      </MarketsProvider>
     </Web3AuthProvider>
   )
 }
