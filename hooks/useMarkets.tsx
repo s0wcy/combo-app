@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { gql, request } from 'graphql-request';
 import useSWR from 'swr';
 
 export type Market = {
@@ -44,53 +43,21 @@ export type Market = {
 };
 
 export type HookMarkets = {
-  markets: Market[] | undefined;
+  markets: { [name: string]: Market[] } | undefined;
   isLoading: boolean;
   isError: boolean;
   mutate: () => void;
 };
 
-const gqQuery = gql`
-  query GetTokenIdConditions($ids: [String!]!) {
-    tokenIdConditions(where: { id_in: $ids }) {
-      id
-      condition {
-        id
-      }
-    }
-  }
-`;
+const fetcher = (q) => axios.get(q).then((d) => d.data);
 
-export const resolveConditionIdsToMarketIds = (
-  ids: string[]
-): Promise<string[]> =>
-  request(
-    'https://api.goldsky.com/api/public/project_cl6mb8i9h0003e201j6li0diw/subgraphs/positions-subgraph/0.0.7/gn',
-    gqQuery,
-    { ids }
-  ).then((res: any) => res.tokenIdConditions.map((c: any) => c.condition.id));
-
-export const fetchMarkets = (ids: string[]): Promise<Market[]> =>
-  axios
-    .all(
-      ids.map((id) => axios.get(`https://clob.polymarket.com/markets/${id}`))
-    )
-    .then(
-      axios.spread((...res) =>
-        res.map((r) => {
-          console.log(r);
-          return r.data;
-        })
-      )
-    );
-
-export const useMarkets = (ids: string[] | undefined): HookMarkets => {
-  const { data, error, mutate } = useSWR<Market[]>(
-    `https://clob.polymarket.com/markets/${ids[0]}`
-  );
+export const useMarkets = (): HookMarkets => {
+  const { data, error, mutate } = useSWR<{
+    markets: { [name: string]: Market[] };
+  }>(`/api/markets`, fetcher);
 
   return {
-    markets: data ?? undefined,
+    markets: data?.markets ?? undefined,
     isLoading: !error && !data,
     isError: Boolean(error),
     mutate,

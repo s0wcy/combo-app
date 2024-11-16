@@ -1,19 +1,16 @@
 import { Market } from '@/hooks/useMarkets';
 import { useState } from 'react';
 
-const TokenOutcomeButton = ({ token }: { token: Market['tokens'][0] }) => {
-  const bgColor = token.outcome === 'Yes' ? '[#2f7c5f]' : '[#682832]';
-  const txtColor = token.outcome === 'Yes' ? '[#00FFB0]' : '[#db2323]';
-
-  return (
-    <div className={`bg-${bgColor} rounded-md hover:cursor-pointer px-4 py-2`}>
-      <p className={`text-${txtColor} text-[14px]`}>{token.outcome}</p>
-    </div>
-  );
-};
-
-export const ComboMarketCard = ({ markets }: { markets: Market[] }) => {
+export const ComboMarketCard = ({
+  name,
+  markets,
+}: {
+  name: string;
+  markets: Market[];
+}) => {
   const [selectedTokens, setSelectedTokens] = useState<Market['tokens']>([]);
+
+  console.log(markets);
 
   const handleSelectToken = (token: Market['tokens'][0], market: Market) => {
     console.log(token, selectedTokens);
@@ -44,7 +41,7 @@ export const ComboMarketCard = ({ markets }: { markets: Market[] }) => {
   return (
     <div className="flex flex-col bg-[#1E1E1E] rounded-xl w-[400px] p-10 text-[#d3d3d3]">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-[20px] text-white">Combo market</h3>
+        <h3 className="text-[20px] text-white">{name}</h3>
         <button className="text-underlined hover:cursor-pointer hover:underline mt-5 text-[10px]">
           Provide Liquidity
         </button>
