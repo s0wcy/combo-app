@@ -119,4 +119,4 @@ export const Web3AuthProvider = ({
 }
 
 // Utilitaire pour utiliser le contexte
-export const useWeb3Auth = () => useContext(Web3AuthContext)
+export const useWeb3 = () => useContext(Web3AuthContext)
