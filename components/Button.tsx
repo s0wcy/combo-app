@@ -1,7 +1,7 @@
 type Props = {
   label: string
   width?: number | null
-  action: () => void | Promise<void> | null
+  action?: () => void | Promise<void> | null
 }
 
 export const Button = (props: Props) => {
