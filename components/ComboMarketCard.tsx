@@ -43,7 +43,6 @@ export const ComboMarketCard = ({
           .reduce((prev, current) => prev * current)
 
   const handleBuy = async () => {
-    console.log("handleBuy")
     const betsLength = selectedTokens.length
     let positionOutcome = []
     let purchaseParams = []
@@ -57,7 +56,6 @@ export const ComboMarketCard = ({
       const market = markets.find((m) =>
         m.tokens.find((t) => t.token_id === selectedTokens[i].token_id)
       )
-      console.log("Selected Market", market)
       const outcomesLength = market?.outcomes.map((o, i) => 0b1 << i)
       const pricePerUnit = selectedTokens[i].price * 10 ** 6
 
@@ -70,9 +68,9 @@ export const ComboMarketCard = ({
       })
     }
 
-    const marketMaker = "0x01A051D4a5AB65BF78d83F81F846cEC2F0066B90"
+    const marketMaker = process.env.NEXT_PUBLIC_MARKET_MAKER_ADDRESS
 
-    const ethersProvider = new ethers.BrowserProvider(web3auth?.provider)
+    const ethersProvider = new ethers.BrowserProvider(web3auth?.provider!)
     const signer = await ethersProvider.getSigner()
     const fees = await ethersProvider.getFeeData()
 

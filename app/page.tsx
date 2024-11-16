@@ -8,7 +8,7 @@ import { useWeb3 } from "@/context/Web3Context"
 import { Header } from "@/components/Header"
 
 import { ComboMarketsPreview } from "@/components/ComboMarketsPreview"
-import RPC from "../rpc/viemRPC"
+import RPC from "@/rpc/viemRPC"
 import { Button } from "@/components/Button"
 
 function App() {
