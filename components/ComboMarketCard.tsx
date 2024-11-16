@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button';
 import { Market } from '@/hooks/useMarkets';
 import { useState } from 'react';
 
@@ -39,17 +40,35 @@ export const ComboMarketCard = ({
           .reduce((prev, current) => prev * current);
 
   return (
-    <div className="flex flex-col bg-[#1E1E1E] rounded-xl w-[400px] p-10 text-[#d3d3d3]">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-[20px] text-white">{name}</h3>
-        <button className="text-underlined hover:cursor-pointer hover:underline mt-5 text-[10px]">
-          Provide Liquidity
-        </button>
+    <div className="flex flex-col bg-[#1E1E1E] rounded-xl w-full max-h-[calc(100%-112px)] p-10 text-[#d3d3d3] overflow-scroll">
+      {/* Head */}
+      <div className="flex flex-col justify-between items-center mt-[8px] w-full">
+        <h3 className="w-full pb-[12px] mb-[4px] text-[20px] text-white text-nowrap border-b-[1px] border-solid border-grey">
+          {name}
+        </h3>
+        <Button label="Provide Liquidity" />
       </div>
+
+      {/* Spacer */}
+      <div className="flex justify-center items-center w-full text-[14px] mb-[16px] pb-[12px] border-b-[1px] border-solid border-grey">
+        or
+      </div>
+
+      {/* Mask */}
+      <div className="w-full h-[80px] absolute left-0 bottom-0 bg-gradient-to-b from-transparent from-0% via-slate-400 via-60% to-black to-100%"></div>
+
+      {/* Markets */}
       <div className="flex flex-col gap-4">
         {markets.map((market) => (
           <div key={market.question_id} className="flex flex-col gap-2">
-            <p className="text-[14px] text-white">{market.question}</p>
+            <div className="flex gap-4">
+              <img
+                className="rounded-lg w-[25px] h-[25px]"
+                src={market.icon}
+                alt=""
+              />
+              <p className="text-[14px] text-white">{market.question}</p>
+            </div>
             <div className="flex flex-col gap-2 mb-5">
               {market.tokens.map((token) => (
                 <div
@@ -57,15 +76,10 @@ export const ComboMarketCard = ({
                     backgroundColor: selectedTokens.find(
                       (t) => t.token_id === token.token_id
                     )
-                      ? '#2f7c5f'
+                      ? token.outcome === 'No'
+                        ? '#E84142'
+                        : '#2f7c5f'
                       : '#303030',
-                    '&:hover': {
-                      backgroundColor: selectedTokens.find(
-                        (t) => t.token_id === token.token_id
-                      )
-                        ? '#2f7c5f'
-                        : '#363636',
-                    },
                   }}
                   className={`flex rounded-md hover:cursor-pointer p-3 gap-10 items-center`}
                   onClick={() => handleSelectToken(token, market)}
@@ -80,6 +94,8 @@ export const ComboMarketCard = ({
           </div>
         ))}
       </div>
+
+      {/* Buy */}
       <div className="flex flex-col mt-10 items-center justify-between">
         <p className="pl-3 text-[12px] mb-4 text-[#bebebe]">
           Combined prices: {(selectedPrice * 100).toFixed(2)}%
