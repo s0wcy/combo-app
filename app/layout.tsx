@@ -1,6 +1,6 @@
 import "./globals.css"
-import { Inter } from "next/font/google"
-import { Markazi_Text } from "next/font/google"
+
+import { Inter, Markazi_Text } from "next/font/google"
 
 const inter = Inter({ subsets: ["latin"] })
 const markazi = Markazi_Text({
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <Web3AuthProvider>
       <html lang='en'>
-        <body className={markazi.className}>
+        <body className={inter.className}>
           <div className='w-screen h-screen mt-[80px]'>{children}</div>
         </body>
       </html>
