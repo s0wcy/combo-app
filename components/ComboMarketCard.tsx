@@ -60,7 +60,7 @@ export const ComboMarketCard = ({
       {/* Markets */}
       <div className="flex flex-col gap-4">
         {markets.map((market) => (
-          <div key={market.question_id} className="flex flex-col gap-2">
+          <div key={market.questionID} className="flex flex-col gap-2">
             <div className="flex gap-4">
               <img
                 className="rounded-lg w-[25px] h-[25px]"

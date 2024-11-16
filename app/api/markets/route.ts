@@ -64,7 +64,16 @@ const resolveMarkets = (ids: string[]) =>
         '&clob_token_ids='
       )}`
     )
-    .then((r) => r.data);
+    .then((r) => {
+      return r.data.map((rr) => {
+        return {
+          ...rr,
+          outcomes: JSON.parse(rr.outcomes),
+          clobTokenIds: JSON.parse(rr.clobTokenIds),
+          outcomePrices: JSON.parse(rr.outcomePrices),
+        };
+      });
+    });
 
 const getMarkets = async (): Promise<any> => {
   const factoryAbi = ['function getMarkets() public view returns (address[])'];
@@ -96,13 +105,20 @@ const getMarkets = async (): Promise<any> => {
     let outcomes = await comboMarketContract.getOutcomes();
     outcomes = outcomes.map((o: BigInt) => o.toString());
 
-    console.log('OUTCOMES', outcomes.length, outcomes);
+    let polyMarkets = await resolveMarkets(outcomes);
 
-    const markets = await resolveMarkets(outcomes);
+    polyMarkets = polyMarkets.map((m: any) => ({
+      ...m,
+      tokens: m.outcomes.map((o: any, i: number) => {
+        return {
+          token_id: m.clobTokenIds[i],
+          outcome: o,
+          price: m.outcomePrices[i],
+        };
+      }),
+    }));
 
-    console.log('MARKETS', markets.length);
-
-    res[comboMarketName] = markets;
+    res[comboMarketName] = polyMarkets;
   }
 
   return res;

@@ -109,6 +109,11 @@ export type Market = {
   clearBookOnStart: boolean;
   manualActivation: boolean;
   negRiskOther: boolean;
+  tokens: {
+    token_id: string;
+    outcome: string;
+    price: number;
+  }[];
 };
 
 export type HookMarkets = {
