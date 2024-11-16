@@ -8,6 +8,7 @@ import { useWeb3Auth } from '@/context/Web3AuthContext';
 import { Header } from '@/components/Header';
 
 import { Button } from '@/components/Button';
+import { ComboMarketsPreview } from '@/components/ComboMarketsPreview';
 import RPC from '../rpc/viemRPC';
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
 
       <div id="console" style={{ whiteSpace: 'pre-line' }}>
         <p className="text-white" style={{ whiteSpace: 'pre-line' }}></p>
+        <ComboMarketsPreview />
       </div>
     </>
   );
