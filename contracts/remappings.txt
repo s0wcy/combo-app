@@ -1,0 +1,14 @@
+common/=lib/ctf-exchange/src/common/
+creator/=lib/ctf-exchange/src/creator/
+ctf-exchange/=lib/ctf-exchange/src/
+dev/=lib/ctf-exchange/src/dev/
+ds-test/=lib/ctf-exchange/lib/forge-std/lib/ds-test/src/
+exchange/=lib/ctf-exchange/src/exchange/
+forge-std/=lib/forge-std/src/
+gov/=lib/ctf-exchange/src/gov/
+mocks/=lib/ctf-exchange/src/dev/mocks/
+openzeppelin-contracts/=lib/ctf-exchange/lib/openzeppelin-contracts/contracts/
+openzeppelin/=lib/ctf-exchange/lib/openzeppelin-contracts/contracts/
+pool/=lib/ctf-exchange/src/dev/uniswap/
+ptoken/=lib/ctf-exchange/src/ptoken/
+solmate/=lib/ctf-exchange/lib/solmate/src/

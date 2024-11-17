@@ -1,0 +1,6 @@
+[submodule "contracts/lib/ctf-exchange"]
+	path = contracts/lib/ctf-exchange
+	url = https://github.com/Polymarket/ctf-exchange
+[submodule "contracts/lib/forge-std"]
+	path = contracts/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
