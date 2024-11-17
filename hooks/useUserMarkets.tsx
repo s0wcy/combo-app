@@ -119,7 +119,7 @@ export type Market = {
 };
 
 export type HookMarkets = {
-  markets: { [name: string]: Market[] } | undefined;
+  markets: (Market & { cost: string; comboMarketName: string })[] | undefined;
   isLoading: boolean;
   isError: boolean;
   mutate: () => void;
@@ -128,6 +128,7 @@ export type HookMarkets = {
 const fetcher = (q: any) => axios.get(q).then((d) => d.data);
 
 export const useUserMarkets = (user: string): HookMarkets => {
+  console.log(user);
   // Hooks
   const { web3auth } = useWeb3();
   if (!web3auth || !web3auth.provider) {
