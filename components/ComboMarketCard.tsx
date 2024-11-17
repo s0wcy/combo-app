@@ -4,6 +4,7 @@ import { Market } from "@/hooks/useMarkets"
 import { ethers, Interface } from "ethers"
 import { useState } from "react"
 import { erc20Abi } from "viem"
+import { Button } from "@/components/Button"
 
 export const ComboMarketCard = ({
   name,
@@ -113,13 +114,13 @@ export const ComboMarketCard = ({
   return (
     <div className='flex flex-col h-full w-full bg-[#1E1E1E] rounded-[4px] text-[#d3d3d3]'>
       {/* Head */}
-      <div className='sticky top-0 left-0 z-10 w-full bg-[#1E1E1E] p-4'>
-        <h3 className='text-[20px] text-white border-b-[1px] border-solid border-grey mb-4'>
+      <div className='sticky top-0 left-0 z-10 w-full bg-[#1E1E1E] rounded-[4px] p-4'>
+        <h3 className='font-bold font-inter text-[20px] text-cream border-b-[1px] border-solid border-grey mb-4 pt-[16px] pb-[12px]'>
           {name}
         </h3>
         {!liquiditySelected ? (
           <button
-            className='rounded-lg p-5 bg-[#1a1f54] w-[100%] hover:bg-[#1f2563]'
+            className='text-[14px] text-blue rounded-[4px] p-5 w-[100%] border-[1px] border-solid border-grey bg-grey hover:bg-cream hover:text-black'
             onClick={() => setLiquiditySelected(true)}
           >
             Provide Liquidity
@@ -134,7 +135,7 @@ export const ComboMarketCard = ({
             />
             <p className='text-[14px] mx-2'>$</p>
             <button
-              className='py-2 px-4 rounded-xl bg-[#24AE60] text-[12px] text-white hover:bg-[#32c06f]'
+              className='py-2 px-4 rounded-xl bg-[#24AE60] text-[12px] text-cream hover:bg-[#32c06f]'
               onClick={() => setLiquiditySelected(false)}
             >
               Buy
@@ -144,7 +145,7 @@ export const ComboMarketCard = ({
       </div>
 
       {/* Main */}
-      <div className='flex-grow overflow-auto px-[8px] mt-2'>
+      <div className='flex-grow overflow-auto px-[8px] mt-2 bg-[#1E1E1E]'>
         <div className='flex justify-center items-center w-full text-[14px] mb-[16px] pb-[12px] border-b-[1px] border-solid border-grey'>
           or
         </div>
@@ -157,7 +158,7 @@ export const ComboMarketCard = ({
                   src={market.icon}
                   alt=''
                 />
-                <p className='text-[14px] text-white'>{market.question}</p>
+                <p className='text-[14px] text-cream'>{market.question}</p>
               </div>
               <div className='flex flex-col gap-2 mb-5'>
                 {market.tokens.map((token) => (
@@ -203,7 +204,7 @@ export const ComboMarketCard = ({
               />
               <p className='text-[14px] mx-2'>$</p>
               <button
-                className='py-2 px-4 rounded-xl bg-[#24AE60] text-[12px] text-white hover:bg-[#32c06f]'
+                className='py-2 px-4 rounded-xl bg-[#24AE60] text-[12px] text-cream hover:bg-[#32c06f]'
                 onClick={handleBuy}
               >
                 Buy

@@ -27,7 +27,7 @@ export const ComboMarketsPreview = () => {
             aria-label='Loading Markets'
             data-testid='loader'
           />
-          <p className='text-[13px] text-white mt-10'>Loading Markets</p>
+          <p className='text-[13px] text-cream mt-10'>Loading Markets</p>
         </div>
       )}
     </div>

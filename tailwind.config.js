@@ -12,13 +12,14 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-        markazi: ["Markazi Text", "serif"],
+        righteous: ["Righteous", "cursive"],
       },
     },
     colors: {
       red: "#E84142",
       green: "#5CBD6E",
-      blue: "#757BF0",
+      blue: "#37BCF8",
+      // blue: "#757BF0",
       purple: "#AF5CBD",
       orange: "#F88512",
       white: "#F0F0F0",
